@@ -1,0 +1,129 @@
+import React, { Component } from 'react';
+
+import Card from './Card';
+
+class TodoList extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            list: '',
+            description: '',
+            image: '',
+            allList: [],
+        };
+    }
+
+    handleChange = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            [event.target.name]: event.target.value,
+        });
+    };
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+
+        const list = {
+            list: this.state.list,
+            description: this.state.description,
+            image: this.state.image,
+        };
+
+        const allList = this.state.allList;
+        allList.push(list);
+
+        this.setState({ allList: allList });
+    };
+
+    //delete
+    // handleDelete = id => {
+    //     const filteredItems = this.state.allList.filter(list => list.description !== description);
+    //     this.setState({
+    //         items: filteredItems
+    //     });
+    // };
+
+    //edit 
+    // handleEdit = id => {
+    //     const filteredItems = this.state.items.filter(item => item.id !== id);
+    //     const selectedItem = this.state.items.find(item => item.id === id);
+    //     this.setState({
+    //       items: filteredItems,
+    //       item: selectedItem.title,
+    //       id: id,
+    //       editItem: true
+    //     });
+    //   };
+
+    render() {
+        return (
+            <div>
+                <div className="card card-body my-3">
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <div className="input-group-text bg-primary text-white">
+                                    <i className="fas fa-shopping-cart" />
+                                </div>
+                            </div>
+                            <input
+                                type='text'
+                                name='list'
+                                id='list'
+                                className="form-control text-capitalize"
+                                placeholder="add item to shopping cart"
+                                onChange={this.handleChange}
+                            />
+                        </div>
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <div className="input-group-text bg-primary text-white">
+                                    <i className="fas fa-balance-scale" />
+                                </div>
+                            </div>
+                            <input
+                                type='text'
+                                name='description'
+                                id='description'
+                                className="form-control text-capitalize"
+                                placeholder='Deskripsi'
+                                onChange={this.handleChange}
+                            />
+                        </div>
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <div className="input-group-text bg-primary text-white">
+                                    <i className="fas fa-images" />
+                                </div>
+                            </div>
+                            <input
+                                type='text'
+                                name='image'
+                                id='image'
+                                className="form-control text-capitalize"
+                                placeholder='url gambar'
+                                onChange={this.handleChange}
+                            />
+                        </div>
+                        <div className="input-group">
+                            <button
+                                type="submit"
+                                value="Tambah List"
+                                className="btn btn-danger btn-block text-uppercase mt-5" >
+                                Add Item </button>
+                        </div>
+
+                    </form>
+                </div>
+
+                {this.state.allList.map((item, index) => {
+                    return <Card key={index} list={item} />;
+                })}
+            </div>
+        );
+    }
+}
+
+export default TodoList;
