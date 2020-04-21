@@ -11,6 +11,7 @@ class TodoList extends Component {
             description: '',
             image: '',
             allList: [],
+            index: 0
         };
     }
 
@@ -24,6 +25,7 @@ class TodoList extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
+        const items = localStorage.getItem('shoppingList');
 
         const list = {
             list: this.state.list,
@@ -31,10 +33,10 @@ class TodoList extends Component {
             image: this.state.image,
         };
 
-        const allList = this.state.allList;
-        allList.push(list);
-
-        this.setState({ allList: allList });
+        const getLocalStorage = items === null ? [] : JSON.parse(items);
+        getLocalStorage.push(list);
+        localStorage.setItem('shoppingList', JSON.stringify(getLocalStorage));
+        window.location.reload();
     };
 
     //delete
@@ -47,8 +49,8 @@ class TodoList extends Component {
 
     //edit 
     // handleEdit = id => {
-    //     const filteredItems = this.state.items.filter(item => item.id !== id);
-    //     const selectedItem = this.state.items.find(item => item.id === id);
+    //     const filteredItems = this.state.allList.filter(list => list.description !== description);
+    //     const selectedItem = this.state.allList.find(list => list.description === description);
     //     this.setState({
     //       items: filteredItems,
     //       item: selectedItem.title,
