@@ -14,6 +14,16 @@ class TodoList extends Component {
             index: 0
         };
     }
+    handleShow = (event, index) => {
+        const shoppingList = JSON.parse(localStorage.getItem("shoppingList"))
+        this.setState({
+           show: true,
+           list: shoppingList[index].list,
+           description: shoppingList[index].description,
+           image: shoppingList[index].image,
+           index: index,
+        });
+    }
 
     handleChange = (event) => {
         event.preventDefault();
@@ -22,6 +32,12 @@ class TodoList extends Component {
             [event.target.name]: event.target.value,
         });
     };
+
+    handleClose = (event) => {
+        this.setState({
+           show: false,
+        });
+     }
 
     handleSubmit = (event) => {
         event.preventDefault();
@@ -113,16 +129,12 @@ class TodoList extends Component {
                             <button
                                 type="submit"
                                 value="Tambah List"
-                                className="btn btn-danger btn-block text-uppercase mt-5" >
+                                className="btn btn-primary btn-block text-uppercase mt-5" >
                                 Add Item </button>
                         </div>
 
                     </form>
                 </div>
-
-                {this.state.allList.map((item, index) => {
-                    return <Card key={index} list={item} />;
-                })}
             </div>
         );
     }

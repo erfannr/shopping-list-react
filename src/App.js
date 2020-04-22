@@ -1,20 +1,27 @@
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-
-import TodoList from './components/TodoList';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Navigation from "./components/Main/Navigation";
+import Login from "./components/User/Login";
+import Register from "./components/User/Register";
+import LogOut from "./components/User/LogOut";
+import TodoList from './components/Main/TodoList';
 
 function App() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-10 mx-auto col-md-8 mt-5">
-            <h3 className="text-capitalize text-center">Shopping List</h3>
+      <Router>
+        <Navigation />
+        <Switch>
+          <Route exact path="/todolist">
+            <TodoList/>
+          </Route>
+          
+        </Switch>
+      </Router>
             
-            <TodoList
-            />
-          </div>
-        </div>
-      </div>
+            
+       
+      
     );
   }
 
